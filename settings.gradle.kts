@@ -1,0 +1,1 @@
+rootProject.name = "io.github.dawidl022.kotlin-fake-api"
