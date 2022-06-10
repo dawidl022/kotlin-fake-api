@@ -15,4 +15,3 @@ suspend fun notFoundResponse(call: ApplicationCall, resourceName: String, id: St
         status = HttpStatusCode.NotFound
     )
 }
-
