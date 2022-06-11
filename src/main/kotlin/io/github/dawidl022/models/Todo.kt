@@ -2,7 +2,13 @@ package io.github.dawidl022.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
+import io.github.dawidl022.models.util.Idable
+import io.github.dawidl022.models.util.InMemoryResource
+import io.github.dawidl022.models.util.XMLParsable
+import io.github.dawidl022.models.util.XMLParser
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Todo(override val id: Int?, val userId: Int, val title: String, val completed: Boolean) : Idable {
     constructor(id: String, userId: String, title: String, completed: String) :
             this(
@@ -10,14 +16,14 @@ data class Todo(override val id: Int?, val userId: Int, val title: String, val c
             )
 }
 
-object Todos : InMemoryResource<Todo>() {
+object Todos : InMemoryResource<Todo>("todo") {
     override val storage: MutableList<Todo> by lazy {
         XMLParser.parse("todos.xml", TodosXML::class.java).toMutableList()
     }
 }
 
 @JsonRootName("todo")
-data class TodoXML(
+private data class TodoXML(
     @set:JsonProperty("userId")
     var userId: String? = null,
 
@@ -32,7 +38,7 @@ data class TodoXML(
 )
 
 @JsonRootName("todos")
-data class TodosXML(
+private data class TodosXML(
     @set:JsonProperty("todo")
     var todos: List<TodoXML> = mutableListOf()
 ) : XMLParsable<List<Todo>> {

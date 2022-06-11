@@ -21,19 +21,10 @@ fun Route.photoRoutes() {
             Photos.get(call) { it }
         }
         post {
-            val photo = call.receive<Photo>()
-            Photos.storage.add(photo)
-            call.respondText("Photo added.", status = HttpStatusCode.Accepted)
+            Photos.add<Photo>(call)
         }
         delete("{id}") {
-            Photos.get(call) {
-                Photos.storage.remove(it)
-                TextContent(
-                    "Photo removed.",
-                    status = HttpStatusCode.Accepted,
-                    contentType = ContentType.Text.Plain
-                )
-            }
+            Photos.delete(call)
         }
     }
 }
