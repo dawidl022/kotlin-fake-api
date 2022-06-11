@@ -15,11 +15,11 @@ fun Route.albumRoutes() {
         get("{id}") {
             Albums.get(call) { it }
         }
-//        post {
-//            Albums.add<Album>(call)
-//        }
-//        delete("{id}") {
-//            Albums.delete(call)
-//        }
+        post {
+            Albums.add<Album>(call)
+        }
+        delete("{id}") {
+            Albums.delete(call)
+        }
     }
 }

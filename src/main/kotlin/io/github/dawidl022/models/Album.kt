@@ -8,10 +8,11 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
-data class Album(override val id: Int?, val userId: Int, val title: String) : Idable {
+data class Album(override val id: Int? = null, val userId: Int, val title: String) : Idable {
     constructor(id: String, userId: String, title: String) : this(id.toInt(), userId.toInt(), title)
 }
 
@@ -26,9 +27,9 @@ object Albums : SeedableTable<Album>("album") {
     override fun seed(): List<Album> =
         XMLParser.parse("albums.xml", AlbumsXML::class.java)
 
-    override fun insertSchema(batch: BatchInsertStatement, item: Album) {
-        batch[userId] = item.userId
-        batch[title] = item.title
+    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Album) {
+        insert[userId] = item.userId
+        insert[title] = item.title
     }
 
     override fun fromRow(row: ResultRow) =
