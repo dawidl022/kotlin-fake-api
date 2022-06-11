@@ -2,20 +2,30 @@ package io.github.dawidl022.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
-import io.github.dawidl022.models.util.Idable
-import io.github.dawidl022.models.util.InMemoryResource
-import io.github.dawidl022.models.util.XMLParsable
-import io.github.dawidl022.models.util.XMLParser
+import io.github.dawidl022.models.util.*
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 
 @Serializable
 data class Album(override val id: Int?, val userId: Int, val title: String) : Idable {
     constructor(id: String, userId: String, title: String) : this(id.toInt(), userId.toInt(), title)
 }
 
-object Albums : InMemoryResource<Album>("album") {
-    override val storage: MutableList<Album> by lazy {
-        XMLParser.parse("albums.xml", AlbumsXML::class.java).toMutableList()
+
+object Albums : Table(), SeedableTable<Album> {
+    val id = integer("id").autoIncrement()
+    val userId = integer("user_id")
+    val title = varchar("title", 255)
+
+    override val primaryKey = PrimaryKey(id)
+
+    override fun seed(): List<Album> =
+        XMLParser.parse("albums.xml", AlbumsXML::class.java)
+
+    override fun insertSchema(batch: BatchInsertStatement, item: Album) {
+        batch[userId] = item.userId
+        batch[title] = item.title
     }
 }
 
@@ -33,7 +43,7 @@ private data class AlbumXML(
 
 @JsonRootName("albums")
 private data class AlbumsXML(
-    @set:JsonProperty("album") var albums: List<AlbumXML> = mutableListOf()
+    @set:JsonProperty("album") var albums: List<AlbumXML> = listOf()
 ) : XMLParsable<List<Album>> {
     override val data
         get() =
