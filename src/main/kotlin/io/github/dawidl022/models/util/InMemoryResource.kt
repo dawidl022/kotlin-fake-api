@@ -13,6 +13,10 @@ interface Idable {
     val id: Int?
 }
 
+/**
+ * In-memory database implementation: no persistent storage
+ * Handles GET, POST (create) and DELETE http requests in a generic way
+ */
 abstract class InMemoryResource<T : Idable>(val name: String) {
     abstract val storage: MutableList<T>
 

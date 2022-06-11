@@ -21,7 +21,7 @@ object DatabaseFactory {
         seedDb(Albums)
     }
 
-    private fun <T, M> seedDb(table: T) where T: Table, T: SeedableTable<M> {
+    private fun <T : SeedableTable<M>, M> seedDb(table: T) {
         if (transaction {
                 table.selectAll().count() == 0L
             }) {

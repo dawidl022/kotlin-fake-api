@@ -8,18 +8,18 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.albumRoutes() {
-//    route("/album") {
-//        get {
-//            call.respond(Albums.storage)
-//        }
-//        get("{id}") {
-//            Albums.get(call) { it }
-//        }
+    route("/album") {
+        get {
+            call.respond(Albums.all())
+        }
+        get("{id}") {
+            Albums.get(call) { it }
+        }
 //        post {
 //            Albums.add<Album>(call)
 //        }
 //        delete("{id}") {
 //            Albums.delete(call)
 //        }
-//    }
+    }
 }

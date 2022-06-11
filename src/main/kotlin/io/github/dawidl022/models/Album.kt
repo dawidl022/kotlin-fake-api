@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
 import io.github.dawidl022.models.util.*
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
+import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
 data class Album(override val id: Int?, val userId: Int, val title: String) : Idable {
@@ -13,8 +16,8 @@ data class Album(override val id: Int?, val userId: Int, val title: String) : Id
 }
 
 
-object Albums : Table(), SeedableTable<Album> {
-    val id = integer("id").autoIncrement()
+object Albums : SeedableTable<Album>("album") {
+    override val id = integer("id").autoIncrement()
     val userId = integer("user_id")
     val title = varchar("title", 255)
 
@@ -27,6 +30,13 @@ object Albums : Table(), SeedableTable<Album> {
         batch[userId] = item.userId
         batch[title] = item.title
     }
+
+    override fun fromRow(row: ResultRow) =
+        Album(
+            id = row[id],
+            userId = row[userId],
+            title = row[title],
+        )
 }
 
 @JsonRootName("album")
