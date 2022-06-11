@@ -1,6 +1,9 @@
 package io.github.dawidl022.db
 
 import io.github.dawidl022.models.Albums
+import io.github.dawidl022.models.Photo
+import io.github.dawidl022.models.Photos
+import io.github.dawidl022.models.Todos
 import io.github.dawidl022.models.util.SeedableTable
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.*
@@ -16,9 +19,12 @@ object DatabaseFactory {
 
         transaction {
             SchemaUtils.create(Albums)
+            SchemaUtils.create(Photos)
+            SchemaUtils.create(Todos)
         }
-
         seedDb(Albums)
+        seedDb(Photos)
+        seedDb(Todos)
     }
 
     private fun <T : SeedableTable<M>, M> seedDb(table: T) {

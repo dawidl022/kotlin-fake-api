@@ -27,17 +27,17 @@ object Albums : SeedableTable<Album>("album") {
     override fun seed(): List<Album> =
         XMLParser.parse("albums.xml", AlbumsXML::class.java)
 
-    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Album) {
-        insert[userId] = item.userId
-        insert[title] = item.title
-    }
-
     override fun fromRow(row: ResultRow) =
         Album(
             id = row[id],
             userId = row[userId],
             title = row[title],
         )
+
+    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Album) {
+        insert[userId] = item.userId
+        insert[title] = item.title
+    }
 }
 
 @JsonRootName("album")

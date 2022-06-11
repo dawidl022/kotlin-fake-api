@@ -3,10 +3,13 @@ package io.github.dawidl022.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
 import io.github.dawidl022.models.util.Idable
-import io.github.dawidl022.models.util.InMemoryResource
+import io.github.dawidl022.models.util.SeedableTable
 import io.github.dawidl022.models.util.XMLParsable
 import io.github.dawidl022.models.util.XMLParser
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.statements.InsertStatement
 
 @Serializable
 data class Todo(override val id: Int?, val userId: Int, val title: String, val completed: Boolean) : Idable {
@@ -16,9 +19,27 @@ data class Todo(override val id: Int?, val userId: Int, val title: String, val c
             )
 }
 
-object Todos : InMemoryResource<Todo>("todo") {
-    override val storage: MutableList<Todo> by lazy {
+object Todos : SeedableTable<Todo>("todo") {
+    override val id = integer("id").autoIncrement()
+    val userId = integer("user_id")
+    val title = varchar("title", 255)
+    val completed = bool("completed")
+
+    override fun seed(): List<Todo> =
         XMLParser.parse("todos.xml", TodosXML::class.java).toMutableList()
+
+    override fun fromRow(row: ResultRow) =
+        Todo(
+            id = row[id],
+            userId = row[userId],
+            title = row[title],
+            completed = row[completed]
+        )
+
+    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Todo) {
+        insert[userId] = item.userId
+        insert[title] = item.title
+        insert[completed] = item.completed
     }
 }
 

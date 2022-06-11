@@ -15,7 +15,7 @@ import io.ktor.server.routing.*
 fun Route.photoRoutes() {
     route("/photo") {
         get {
-            call.respond(Photos.storage)
+            call.respond(Photos.all())
         }
         get("{id}") {
             Photos.get(call) { it }

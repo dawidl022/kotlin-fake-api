@@ -16,6 +16,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
+interface Idable {
+    val id: Int?
+}
+
 abstract class SeedableTable<T : Idable>(val name: String) : Table() {
     abstract fun seed(): List<T>
     abstract fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: T)

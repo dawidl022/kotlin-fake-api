@@ -9,7 +9,7 @@ import io.ktor.server.routing.*
 fun Route.todoRoutes() {
     route("/todo") {
         get {
-            call.respond(Todos.storage)
+            call.respond(Todos.all())
         }
         get ("{id}") {
             Todos.get(call) { it }
