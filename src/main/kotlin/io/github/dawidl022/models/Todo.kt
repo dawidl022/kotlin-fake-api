@@ -7,9 +7,8 @@ import io.github.dawidl022.models.util.SeedableTable
 import io.github.dawidl022.models.util.XMLParsable
 import io.github.dawidl022.models.util.XMLParser
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateBuilder
 
 @Serializable
 data class Todo(override val id: Int?, val userId: Int, val title: String, val completed: Boolean) : Idable {
@@ -36,10 +35,10 @@ object Todos : SeedableTable<Todo>("todo") {
             completed = row[completed]
         )
 
-    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Todo) {
-        insert[userId] = item.userId
-        insert[title] = item.title
-        insert[completed] = item.completed
+    override fun <Key : Any> builderSchema(builder: UpdateBuilder<Key>, item: Todo) {
+        builder[userId] = item.userId
+        builder[title] = item.title
+        builder[completed] = item.completed
     }
 }
 

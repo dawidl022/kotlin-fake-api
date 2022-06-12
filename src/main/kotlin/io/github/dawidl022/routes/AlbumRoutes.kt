@@ -18,6 +18,9 @@ fun Route.albumRoutes() {
         post {
             Albums.add<Album>(call)
         }
+        put {
+            Albums.put<Album>(call)
+        }
         delete("{id}") {
             Albums.delete(call)
         }

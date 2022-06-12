@@ -17,6 +17,9 @@ fun Route.todoRoutes() {
         post {
             Todos.add<Todo>(call)
         }
+        put {
+            Todos.put<Todo>(call)
+        }
         delete("{id}") {
             Todos.delete(call)
         }

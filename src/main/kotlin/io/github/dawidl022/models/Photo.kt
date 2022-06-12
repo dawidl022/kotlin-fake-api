@@ -9,6 +9,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import java.io.File
 
 @Serializable
@@ -36,10 +37,10 @@ object Photos : SeedableTable<Photo>("photo") {
             thumbnailUrl = row[thumbnailUrl],
         )
 
-    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Photo) {
-        insert[albumId] = item.albumId
-        insert[title] = item.title
-        insert[url] = item.url
-        insert[thumbnailUrl] = item.thumbnailUrl
+    override fun <Key : Any> builderSchema(builder: UpdateBuilder<Key>, item: Photo) {
+        builder[albumId] = item.albumId
+        builder[title] = item.title
+        builder[url] = item.url
+        builder[thumbnailUrl] = item.thumbnailUrl
     }
 }

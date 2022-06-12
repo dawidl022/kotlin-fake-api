@@ -23,6 +23,12 @@ fun Route.photoRoutes() {
         post {
             Photos.add<Photo>(call)
         }
+        put("{id}") {
+            Photos.put<Photo>(call)
+        }
+//        patch {
+//            Photos.patch(call)
+//        }
         delete("{id}") {
             Photos.delete(call)
         }

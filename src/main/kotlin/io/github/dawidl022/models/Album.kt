@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
@@ -34,9 +35,9 @@ object Albums : SeedableTable<Album>("album") {
             title = row[title],
         )
 
-    override fun <Key : Any> insertSchema(insert: InsertStatement<Key>, item: Album) {
-        insert[userId] = item.userId
-        insert[title] = item.title
+    override fun <Key : Any> builderSchema(builder: UpdateBuilder<Key>, item: Album) {
+        builder[userId] = item.userId
+        builder[title] = item.title
     }
 }
 

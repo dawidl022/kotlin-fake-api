@@ -1,13 +1,10 @@
 package io.github.dawidl022.db
 
 import io.github.dawidl022.models.Albums
-import io.github.dawidl022.models.Photo
 import io.github.dawidl022.models.Photos
 import io.github.dawidl022.models.Todos
 import io.github.dawidl022.models.util.SeedableTable
-import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
@@ -33,7 +30,7 @@ object DatabaseFactory {
             }) {
             transaction {
                 table.batchInsert(table.seed()) {
-                    table.insertSchema(this, it)
+                    table.builderSchema(this, it)
                 }
             }
         }
