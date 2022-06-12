@@ -1,6 +1,6 @@
 package io.github.dawidl022.models
 
-import io.github.dawidl022.DATA_DIR
+import io.github.dawidl022.Config
 import io.github.dawidl022.models.util.Idable
 import io.github.dawidl022.models.util.SeedableTable
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import java.io.File
 
@@ -26,7 +25,7 @@ object Photos : SeedableTable<Photo>("photo") {
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun seed(): List<Photo> =
-        Json.decodeFromStream(File(DATA_DIR + "photos.json").inputStream())
+        Json.decodeFromStream(File(Config.dataDir + "photos.json").inputStream())
 
     override fun fromRow(row: ResultRow) =
         Photo(

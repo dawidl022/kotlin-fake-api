@@ -26,9 +26,6 @@ fun Route.photoRoutes() {
         put("{id}") {
             Photos.put<Photo>(call)
         }
-//        patch {
-//            Photos.patch(call)
-//        }
         delete("{id}") {
             Photos.delete(call)
         }

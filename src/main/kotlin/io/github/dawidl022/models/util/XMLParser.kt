@@ -2,7 +2,7 @@ package io.github.dawidl022.models.util
 
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import io.github.dawidl022.DATA_DIR
+import io.github.dawidl022.Config
 import java.io.File
 
 interface XMLParsable<M> {
@@ -19,5 +19,5 @@ object XMLParser {
         ).data
 
     fun <M, T : XMLParsable<M>> parse(fileName: String, target: Class<T>): M =
-        parse(DATA_DIR, fileName, target)
+        parse(Config.dataDir, fileName, target)
 }

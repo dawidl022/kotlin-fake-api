@@ -104,11 +104,6 @@ abstract class SeedableTable<T : Idable>(val name: String) : Table() {
         )
     }
 
-//    suspend fun patch(call: ApplicationCall) {
-//        val queryId = getQueryId(call) ?: return
-//
-//    }
-
     suspend fun getQueryId(call: ApplicationCall): String? {
         return call.parameters["id"].apply { if (this == null) noIdResponse(call) }
     }

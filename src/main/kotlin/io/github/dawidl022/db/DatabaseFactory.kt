@@ -10,9 +10,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
     fun init() {
         Database.connect(
-            "jdbc:postgresql://localhost:5432/kotlin_fake_api", driver = "org.postgresql.Driver",
-            user = "user", password = "password"
-        )
+            "jdbc:${System.getenv("FAKE_DATABASE_URL")}", driver = System.getenv("DB_DRIVER"))
 
         transaction {
             SchemaUtils.create(Albums)

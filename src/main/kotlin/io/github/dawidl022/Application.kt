@@ -4,9 +4,10 @@ import io.github.dawidl022.db.DatabaseFactory
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.github.dawidl022.plugins.*
-import org.jetbrains.exposed.sql.Database
 
-const val DATA_DIR = "src/main/kotlin/io/github/dawidl022/data/"
+object Config {
+    val dataDir = System.getenv("DATA_DIR")
+}
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {

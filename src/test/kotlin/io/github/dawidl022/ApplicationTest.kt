@@ -48,16 +48,11 @@ class ApplicationTest {
     @Test
     fun testResourcePost() = testApplication {
         configure(this)
-        val initialStorageSize = Albums.storage.size
-        // runBlocking {
-            client.post("/album") {
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-                setBody("""{"id":1000,"userId":1,"title":"quidem molestiae enim"}""")
-            }.apply {
-                assertEquals(HttpStatusCode.Accepted, status)
-            }
-        // }
-        // FIXME Could not get this to work
-        // assertEquals(initialStorageSize + 1, Albums.storage.size)
+        client.post("/album") {
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
+            setBody("""{"id":1000,"userId":1,"title":"quidem molestiae enim"}""")
+        }.apply {
+            assertEquals(HttpStatusCode.Accepted, status)
+        }
     }
 }
