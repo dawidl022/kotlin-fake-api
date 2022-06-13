@@ -1,5 +1,7 @@
 package io.github.dawidl022.models
 
+import com.apurebase.kgraphql.KGraphQL
+import com.apurebase.kgraphql.schema.dsl.SchemaBuilder
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
 import io.github.dawidl022.models.util.*
@@ -16,7 +18,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 data class Album(override val id: Int? = null, val userId: Int, val title: String) : Idable {
     constructor(id: String, userId: String, title: String) : this(id.toInt(), userId.toInt(), title)
 }
-
 
 object Albums : SeedableTable<Album>("album") {
     override val id = integer("id").autoIncrement()

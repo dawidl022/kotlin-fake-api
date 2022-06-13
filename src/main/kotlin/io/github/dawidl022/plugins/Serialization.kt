@@ -1,13 +1,16 @@
 package io.github.dawidl022.plugins
 
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
+import kotlinx.serialization.json.Json
 
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
-        json()
+        serialization(ContentType.Application.Json, Json { ignoreUnknownKeys = true })
     }
 }
