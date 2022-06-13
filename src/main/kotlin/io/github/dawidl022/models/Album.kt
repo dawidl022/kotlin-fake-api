@@ -8,6 +8,7 @@ import io.github.dawidl022.models.util.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -23,6 +24,13 @@ object Albums : SeedableTable<Album>("album") {
     override val id = integer("id").autoIncrement()
     val userId = integer("user_id")
     val title = varchar("title", 255)
+
+    fun byUserId(userId: Int) =
+        transaction {
+            select {
+                this@Albums.userId eq userId
+            }.map(::fromRow)
+        }
 
     override val primaryKey = PrimaryKey(id)
 

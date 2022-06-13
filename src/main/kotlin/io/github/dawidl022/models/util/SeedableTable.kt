@@ -20,4 +20,11 @@ abstract class SeedableTable<T : Idable>(val name: String) : Table() {
         transaction {
             selectAll().map(::fromRow)
         }
+
+    fun get(albumId: Int) =
+        transaction {
+            select {
+                this@SeedableTable.id eq albumId
+            }.map(::fromRow).firstOrNull()
+        }
 }
