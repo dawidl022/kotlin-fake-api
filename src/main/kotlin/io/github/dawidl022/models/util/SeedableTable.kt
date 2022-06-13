@@ -21,10 +21,39 @@ abstract class SeedableTable<T : Idable>(val name: String) : Table() {
             selectAll().map(::fromRow)
         }
 
-    fun get(albumId: Int) =
+    fun get(recordId: Int) =
         transaction {
             select {
-                this@SeedableTable.id eq albumId
+                this@SeedableTable.id eq recordId
             }.map(::fromRow).firstOrNull()
+        }
+
+    fun create(item: T) =
+        transaction {
+            val insertedId = insert {
+                builderSchema(it, item)
+            }[this@SeedableTable.id]
+            get(insertedId)
+        }
+
+    fun update(item: T): T? {
+        val itemId = item.id ?: return null
+        return transaction {
+            if (select { this@SeedableTable.id eq itemId }.count() == 0L) {
+                return@transaction null
+            }
+            if (update({ this@SeedableTable.id eq itemId }) {
+                    builderSchema(it, item)
+                } == 0) return@transaction null
+            get(itemId)
+        }
+    }
+
+    fun delete(recordId: Int) =
+        transaction {
+            val deletedCount = deleteWhere {
+                this@SeedableTable.id eq recordId
+            }
+            deletedCount > 0
         }
 }
