@@ -2,9 +2,11 @@
 
 Simple API returning the same data as
 [JSON Placeholder](https://jsonplaceholder.typicode.com/)
-built using Kotlin, the [`Ktor`](https://ktor.io/) framework, the
-[`jackson`](https://github.com/FasterXML/jackson-module-kotlin) library for
-parsing XML data and the [`Exposed`](https://github.com/JetBrains/Exposed) library as a database ORM.
+built using Kotlin, the [`Ktor`](https://ktor.io/) framework and the following libraries:
+- [`jackson`](https://github.com/FasterXML/jackson-module-kotlin) for
+  parsing XML data
+- [`Exposed`](https://github.com/JetBrains/Exposed) library as a database ORM]
+- [`graphql-kotlin`](https://github.com/ExpediaGroup/graphql-kotlin) for managing GraphQL endpoint
 
 Only a subset of the original relations is currently implemented.
 
