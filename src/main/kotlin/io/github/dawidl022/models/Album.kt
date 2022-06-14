@@ -15,8 +15,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
 data class Album(
+    // Prevent client from submitting an id in input, as ids are auto incremented
     @GraphQLValidObjectLocations([GraphQLValidObjectLocations.Locations.OBJECT])
     override val id: Int? = null,
+
     val userId: Int,
     val title: String
     ) : Idable {
