@@ -1,5 +1,6 @@
 package io.github.dawidl022.models
 
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
 import io.github.dawidl022.models.util.*
@@ -13,7 +14,12 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
-data class Album(override val id: Int? = null, val userId: Int, val title: String) : Idable {
+data class Album(
+    @GraphQLValidObjectLocations([GraphQLValidObjectLocations.Locations.OBJECT])
+    override val id: Int? = null,
+    val userId: Int,
+    val title: String
+    ) : Idable {
     constructor(id: String, userId: String, title: String) : this(id.toInt(), userId.toInt(), title)
 }
 
