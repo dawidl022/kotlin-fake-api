@@ -1,5 +1,6 @@
 package io.github.dawidl022.models
 
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import io.github.dawidl022.Config
 import io.github.dawidl022.models.util.Idable
 import io.github.dawidl022.models.util.SeedableTable
@@ -12,13 +13,19 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import java.io.File
 
 @Serializable
-data class Photo(override val id: Int?, val albumId: Int, val title: String, val url: String, val thumbnailUrl: String)
-    : Idable
+data class Photo(    // Prevent client from submitting an id in input, as ids are auto incremented
+    @GraphQLValidObjectLocations([GraphQLValidObjectLocations.Locations.OBJECT])
+    override val id: Int? = null,
+
+    val albumId: Int, val title: String,
+    val url: String,
+    val thumbnailUrl: String
+) : Idable
 
 
 object Photos : SeedableTable<Photo>("photo") {
     override val id = integer("id").autoIncrement()
-    val albumId = integer("album_id")
+    val albumId = integer("album_id") references Albums.id
     val title = varchar("title", 255)
     val url = varchar("url", 1023)
     val thumbnailUrl = varchar("thumbnail_url", 1023)

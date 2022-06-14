@@ -7,9 +7,11 @@ import com.expediagroup.graphql.generator.toSchema
 val schema = toSchema(
     config = SchemaGeneratorConfig(supportedPackages = listOf("io.github.dawidl022.models")),
     queries = listOf(
-        AlbumQuery()
+        AlbumQuery(),
+        PhotoQuery(),
     ).map(::TopLevelObject),
     mutations = listOf(
-        AlbumMutation()
+        AlbumMutation(),
+        PhotoMutation(),
     ).map(::TopLevelObject)
 )
