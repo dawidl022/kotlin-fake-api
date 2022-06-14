@@ -9,9 +9,11 @@ val schema = toSchema(
     queries = listOf(
         AlbumQuery(),
         PhotoQuery(),
+        TodoQuery(),
     ).map(::TopLevelObject),
     mutations = listOf(
         AlbumMutation(),
         PhotoMutation(),
+        TodoMutation(),
     ).map(::TopLevelObject)
 )

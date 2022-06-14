@@ -13,7 +13,8 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import java.io.File
 
 @Serializable
-data class Photo(    // Prevent client from submitting an id in input, as ids are auto incremented
+data class Photo(
+    // Prevent client from submitting an id in input, as ids are auto incremented
     @GraphQLValidObjectLocations([GraphQLValidObjectLocations.Locations.OBJECT])
     override val id: Int? = null,
 
