@@ -8,5 +8,8 @@ val schema = toSchema(
     config = SchemaGeneratorConfig(supportedPackages = listOf("io.github.dawidl022.models")),
     queries = listOf(
         AlbumQuery()
+    ).map(::TopLevelObject),
+    mutations = listOf(
+        AlbumMutation()
     ).map(::TopLevelObject)
 )

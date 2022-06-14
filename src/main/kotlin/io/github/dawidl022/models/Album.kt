@@ -1,5 +1,6 @@
 package io.github.dawidl022.models
 
+import com.expediagroup.graphql.generator.annotations.GraphQLType
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName

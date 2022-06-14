@@ -10,7 +10,7 @@ class AlbumQuery {
         Albums.all()
 
     fun album(id: Int): Album =
-        Albums.get(id) ?: throw RecordNotFoundWithIdException(Albums.name, id)
+        Albums.get(id)
 
     fun albumsByUser(userId: Int): List<Album> =
         transaction {
