@@ -39,12 +39,12 @@ class KtorGraphQLServer(
 fun getGraphQLServer(): KtorGraphQLServer {
     // stripped some unnecessary stuff from the original example
     val requestParser = KtorGraphQLRequestParser()
+    // deprecated, but GraphQLServer requires it as an argument
     val contextFactory = object : GraphQLContextFactory<GraphQLContext, ApplicationRequest> {
         override suspend fun generateContext(request: ApplicationRequest): GraphQLContext? =
             null
     }
-    val graphQL = GraphQL.newGraphQL(schema)
-        .build()
+    val graphQL = GraphQL.newGraphQL(schema).build()
     val requestHandler = GraphQLRequestHandler(graphQL)
 
     return KtorGraphQLServer(requestParser, contextFactory, requestHandler)
