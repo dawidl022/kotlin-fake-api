@@ -1,5 +1,6 @@
 package io.github.dawidl022.routes
 
+import io.github.dawidl022.handlers.ResourceHandler
 import io.github.dawidl022.models.Photo
 import io.github.dawidl022.models.Photos
 import io.ktor.content.*
@@ -13,21 +14,6 @@ import io.ktor.server.routing.*
 
 
 fun Route.photoRoutes() {
-    route("/photo") {
-        get {
-            call.respond(Photos.all())
-        }
-        get("{id}") {
-            Photos.get(call) { it }
-        }
-        post {
-            Photos.add<Photo>(call)
-        }
-        put("{id}") {
-            Photos.put<Photo>(call)
-        }
-        delete("{id}") {
-            Photos.delete(call)
-        }
-    }
+    val handler = ResourceHandler(Photos)
+    resourceRoutes("/photo", handler)
 }
